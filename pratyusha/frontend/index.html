@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontend</title>
+</head>
+<body>
+    <div class="parent">
+       <button class="submit" onclick=handleRequest()>Click for History</button>
+    </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.1/axios.min.js"></script>
+<script>
+    function handleRequest() {
+    axios.get("http://localhost:3000/history").then(function (response) {
+        const parent=document.querySelector('.parent');
+        const ulElement = document.createElement('ul');
+        const resp=response.data;
+        console.log(resp);
+        for(num in resp){
+        const liElement = document.createElement('li');
+        liElement.textContent =`id:${resp[num]._id}`; 
+        const ulElement2=document.createElement('ul');
+        const liElement2 = document.createElement('li');
+        const liElement3 = document.createElement('li');
+        liElement2.textContent=`Question:${resp[num].question}`;
+        liElement3.textContent=`Ans:${resp[num].answer}`;
+       ulElement2.appendChild(liElement2);
+       ulElement2.appendChild(liElement3);
+        liElement.appendChild(ulElement2);
+        ulElement.appendChild(liElement);
+        }
+        parent.appendChild(ulElement);
+
+    })
+  
+}
+</script>
+</body>
+</html>
